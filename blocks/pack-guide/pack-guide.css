@@ -1,0 +1,238 @@
+.pack-guide-container:not(.section) {
+  display: flex;
+  background-color: #0b0b0b;
+  background-image: radial-gradient(circle at 20% 20%, #1a1a1a 0%, #0b0b0b 100%);
+  color: #fff;
+  padding: 80px 60px;
+  gap: 60px;
+  font-family: 'Roboto', sans-serif;
+  min-height: 600px;
+  align-items: flex-start;
+}
+
+.pack-guide-left {
+  flex: 1;
+  max-width: 650px;
+}
+
+.pack-guide-right {
+  flex: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 100px;
+  height: 450px;
+}
+
+.pack-guide-accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.pack-guide-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  background-color: transparent;
+  padding: 0 1rem;
+}
+
+.pack-guide-item.active {
+  background: #333;
+  border-radius: 6px;
+  box-shadow: 0 4px 2pc 0 rgba(0, 0, 0, .08);
+  color: #fff;
+  pointer-events: none;
+}
+
+.pack-guide-header {
+  display: flex;
+  align-items: center;
+  padding: 25px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.pack-guide-num {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  /* font-weight: 700; */
+  margin-right: 25px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.pack-guide-item.active .pack-guide-num {
+  background-color: #f24b26;
+  border-color: #f24b26;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(242, 75, 38, 0.4);
+}
+
+.pack-guide-title {
+  font-size: 16px;
+  /* font-weight: 700; */
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: color 0.3s ease;
+}
+
+.pack-guide-item.active .pack-guide-title {
+  color: #fff;
+}
+
+.pack-guide-icon {
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+.pack-guide-icon::before,
+.pack-guide-icon::after {
+  content: '';
+  position: absolute;
+  background-color: #f24b26;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.pack-guide-icon::before {
+  width: 16px;
+  height: 2px;
+  top: 11px;
+  right: 0;
+}
+
+.pack-guide-icon::after {
+  width: 2px;
+  height: 16px;
+  top: 4px;
+  right: 7px;
+}
+
+.pack-guide-item.active .pack-guide-icon::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+.pack-guide-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+  padding: 0;
+}
+
+.pack-guide-item.active .pack-guide-body {
+  max-height: 1000px;
+
+}
+
+.pack-guide-content {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 25px;
+  padding-left: 65px;
+  max-width: 90%;
+}
+
+.pack-guide-cta {
+  color: #f04c23;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: .65px;
+  line-height: 40px;
+  padding: 10px 0;
+  text-align: left;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.pack-guide-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #f24b26;
+  transition: width 0.3s ease;
+}
+
+.pack-guide-cta:hover::after {
+  width: 100%;
+}
+
+.pack-guide-visual-item {
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.pack-guide-visual-item.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.pack-guide-visual-item picture,
+.pack-guide-visual-item img {
+  height: auto;
+  border-radius: 12px;
+  max-width: 658px;
+}
+
+.pack-guide-mobile-visual {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .pack-guide-container:not(.section) {
+    flex-direction: column;
+    padding: 40px 20px !important;
+  }
+
+  .pack-guide-right {
+    display: none;
+
+  }
+
+  .pack-guide-mobile-visual {
+    display: block;
+    margin-top: 20px;
+    /* padding-left: 52px; */
+    padding-bottom: 1rem;
+  }
+
+  .pack-guide-mobile-visual img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .pack-guide-left {
+    max-width: 100%;
+  }
+
+  .pack-guide-item.active .pack-guide-body {
+    max-height: 1500px;
+
+  }
+}
