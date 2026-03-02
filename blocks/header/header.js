@@ -1,28 +1,20 @@
 import { getMetadata, decorateIcons } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-/**
- * loads and decorates the header, mainly the nav
- * @param {Element} block The header block element
- */
 export default async function decorate(block) {
-  // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
-  // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
   
-  // Create wrapper for the main header content
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
 
   const navSectionWrappers = ['topbar', 'brand', 'sections', 'tools'];
   
-  // Process sections from fragment
   const fragmentSections = [...fragment.children];
   fragmentSections.forEach((section, i) => {
     if (i < navSectionWrappers.length) {
@@ -35,40 +27,53 @@ export default async function decorate(block) {
   const navSections = fragment.querySelector('.nav-sections');
   const navTools = fragment.querySelector('.nav-tools');
 
-  // Brand decoration
   const brandLink = navBrand?.querySelector('a');
   if (brandLink) brandLink.classList.add('nav-brand-logo');
 
-  // Top Bar Decoration
   if (topbar) {
     const list = topbar.querySelector('ul');
     if (list) {
-      list.querySelectorAll('li').forEach((li) => {
+      list.querySelectorAll(':scope > li').forEach((li) => {
         const text = li.textContent.trim().toLowerCase();
         if (text.includes('language') || text.includes('english')) {
           li.classList.add('language-selector');
-          if (li.querySelector('ul')) li.classList.add('has-dropdown');
+          const anchor = li.querySelector('a');
+          if (anchor) anchor.textContent = 'ENGLISH';
+
+          if (li.querySelector('ul')) {
+            li.classList.add('has-dropdown');
+          }
         }
       });
     }
   }
 
-  // Sections (Main Menu)
   if (navSections) {
-    navSections.querySelectorAll('ul > li').forEach((navItem) => {
+    navSections.querySelectorAll(':scope > ul > li, .default-content-wrapper > ul > li').forEach((navItem) => {
       if (navItem.querySelector('ul')) {
         navItem.classList.add('nav-drop');
-        const link = navItem.querySelector('a');
+        const link = navItem.querySelector(':scope > a');
         if (link) {
-           const caret = document.createElement('span');
-           caret.className = 'nav-caret';
-           link.append(caret);
+          if (!link.querySelector('.nav-caret')) {
+            const caret = document.createElement('span');
+            caret.className = 'nav-caret';
+            link.append(caret);
+          }
+        } else {
+          const firstChild = navItem.firstChild;
+          if (firstChild && firstChild.nodeType === Node.TEXT_NODE) {
+            const span = document.createElement('span');
+            span.textContent = firstChild.textContent;
+            navItem.insertBefore(span, navItem.firstChild.nextSibling.nextSibling); 
+            const caret = document.createElement('span');
+            caret.className = 'nav-caret';
+            span.append(caret);
+          }
         }
       }
     });
   }
 
-  // Tools
   if (navTools) {
     let hasProfile = false;
     navTools.querySelectorAll('li').forEach((li) => {
@@ -79,7 +84,6 @@ export default async function decorate(block) {
         hasProfile = true;
       }
     });
-    // If no profile icon found, append one to the tools list
     if (!hasProfile) {
       const ul = navTools.querySelector('ul') || navTools.appendChild(document.createElement('ul'));
       const profileLi = document.createElement('li');
@@ -89,7 +93,6 @@ export default async function decorate(block) {
     }
   }
 
-  // Mobile Hamburger
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
@@ -102,7 +105,6 @@ export default async function decorate(block) {
     nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   });
 
-  // Assemble the DOM structure
   if (topbar) nav.append(topbar);
   
   navWrapper.append(navBrand || document.createElement('div'));
