@@ -84,6 +84,30 @@ export default async function decorate(block) {
         hasProfile = true;
       }
     });
+
+    const mobileTools = document.createElement('div');
+    mobileTools.className = 'nav-mobile-tools';
+    
+    const toolItems = [
+      { name: 'GET A CONNECTION', icon: '/icons/new-connection-logo.png', link: '/new' },
+      { name: 'RECHARGE', icon: '/icons/recharge-logo-header.png', link: '/recharge' },
+      { name: 'LOGIN', icon: '/icons/profileicon.png', link: '/login' }
+    ];
+
+    const mobileToolsList = document.createElement('ul');
+    toolItems.forEach((item) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${item.link}">
+        <div class="icon">
+          <img src="${item.icon}" alt="${item.name}">
+        </div>
+        <span class="tool-label">${item.name}</span>
+      </a>`;
+      mobileToolsList.append(li);
+    });
+    mobileTools.append(mobileToolsList);
+    navWrapper.append(mobileTools);
+
     if (!hasProfile) {
       const ul = navTools.querySelector('ul') || navTools.appendChild(document.createElement('ul'));
       const profileLi = document.createElement('li');
@@ -91,6 +115,26 @@ export default async function decorate(block) {
       profileLi.innerHTML = '<a href="/login" title="User Profile">User</a>';
       ul.append(profileLi);
     }
+  }
+
+  if (navSections) {
+    navSections.querySelectorAll('.nav-drop').forEach((drop) => {
+      const label = drop.querySelector(':scope > a, :scope > span');
+      if (label) {
+        label.addEventListener('click', (e) => {
+          if (window.innerWidth < 900) {
+            e.preventDefault();
+            const expanded = drop.getAttribute('aria-expanded') === 'true';
+            drop.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          }
+        });
+      }
+    });
+
+    const homeCta = document.createElement('div');
+    homeCta.className = 'nav-mobile-home-cta';
+    homeCta.innerHTML = '<a href="/" class="button primary">HOME</a>';
+    navSections.append(homeCta);
   }
 
   const hamburger = document.createElement('div');
