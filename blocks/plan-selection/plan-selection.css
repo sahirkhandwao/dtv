@@ -1,0 +1,336 @@
+.plan-selection-header {
+  text-align: center;
+  margin-bottom: 60px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.plan-selection-header h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #333;
+}
+
+.plan-selection.block {
+  margin: 1rem auto 0;
+  padding-bottom: 4rem;
+  width: 80%;
+}
+
+.plan-selection-header h2 strong {
+  color: #f24b26;
+  font-weight: 700;
+}
+
+.plan-selection-header p {
+  font-size: 18px;
+  color: #666;
+}
+
+/* Cards Area */
+.plan-selection-cards {
+  margin-bottom: 40px;
+  overflow: visible;
+}
+
+.plan-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  position: relative;
+  transition: transform 0.3s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid transparent;
+  box-shadow: 0 1px 15px 1px hsla(0, 2%, 58%, .2);
+  box-sizing: border-box;
+}
+
+.plan-card:hover {
+  border: 2px solid #ef4624;
+}
+
+/* Badge */
+.plan-card-badge {
+  position: absolute;
+  top: -15px;
+  left: 30px;
+  background: linear-gradient(90deg, #f24b26, #ff8c00);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(242, 75, 38, 0.3);
+}
+
+/* Card Header */
+.plan-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 25px;
+  position: relative;
+  padding-top: 10px;
+}
+
+.plan-card-header::after {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 150px;
+  border-radius: 10px;
+  height: 150px;
+  background: url("https://www.dishtv.in/content/dam/dishtv-aem-web-platform/images/newconnection/card-bg-img.png") no-repeat right top;
+  background-size: contain;
+  opacity: 0.9;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.plan-card-price-area {
+  position: relative;
+  z-index: 2;
+}
+
+.card-plan-name {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.card-price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #f24b26;
+  margin-bottom: 5px;
+}
+
+.card-sub-price {
+  font-size: 12px;
+  color: #999;
+}
+
+.plan-card-visual-area {
+  width: 120px;
+  position: relative;
+  z-index: 2;
+}
+
+.plan-card-visual-area img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+}
+
+/* Features */
+.plan-card-features {
+  border-top: 1px dashed #eee;
+  padding-top: 20px;
+  margin-bottom: 25px;
+}
+
+.plan-card-features h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f24b26;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features-list li {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.features-list li::before {
+  content: '✓';
+  color: #f24b26;
+  position: absolute;
+  left: 0;
+  font-weight: 900;
+}
+
+/* Value Adds Grid */
+.plan-card-value-adds {
+  border-top: 1px dashed #eee;
+  padding-top: 20px;
+  margin-bottom: 30px;
+  flex-grow: 1;
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.value-grid li {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.value-icon img {
+  height: 35px;
+  object-fit: contain;
+  width: 109px;
+}
+
+.value-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
+  line-height: 1.2;
+}
+
+/* Footer Section */
+.plan-card-footer {
+  border-top: 1px solid #f0f0f0;
+  justify-content: space-between;
+  padding-top: 20px;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.antenna-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.antenna-toggle label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #777;
+}
+
+.toggle-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.toggle-opt input {
+  accent-color: #f24b26;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.plan-card-action {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.select-button {
+  flex: 1;
+  background-color: #f24b26;
+  color: #fff;
+  border-radius: 6px;
+  font-weight: 700;
+  max-width: 190px;
+
+  text-decoration: none;
+  font-size: 15px;
+  text-align: center;
+  padding: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.select-button:hover {
+  background-color: #d8431e;
+  box-shadow: 0 4px 10px rgba(242, 75, 38, 0.4);
+}
+
+.icon-info-circle {
+  width: 20px;
+  height: 20px;
+  background: url("/icons/nc-info-tooltip.png") no-repeat center;
+  background-size: contain;
+  cursor: pointer;
+}
+
+/* Block Level Footer */
+.plan-selection-disclaimer {
+  text-align: right;
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 40px;
+}
+
+.plan-selection-bottom-cta {
+  text-align: center;
+  font-size: 16px;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Swiper Mobile */
+.swiper-pagination {
+  bottom: -10px;
+}
+
+.swiper-pagination-bullet-active {
+  background: #f24b26;
+}
+
+@media (min-width: 649px) {
+  .plan-selection-cards .swiper-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    height: auto;
+    transform: none;
+    /* Disable swiper transform on desktop */
+  }
+
+  .plan-selection-cards .swiper-slide {
+    width: auto;
+    margin: 0;
+    height: auto;
+  }
+}
+
+@media (max-width: 648px) {
+  .plan-selection-header h2 {
+    font-size: 28px;
+  }
+
+  .plan-card {
+    margin: 30px 10px;
+  }
+}
