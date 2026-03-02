@@ -10,10 +10,11 @@
   --text-color: #131313;
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
+  --orange-color: #f24b26;
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --heading-font-family: 'Roboto', sans-serif;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -144,8 +145,9 @@ button {
 
 main img {
   max-width: 100%;
-  width: auto;
+  /* width: auto; */
   height: auto;
+  width: 100%;
 }
 
 .icon img {
