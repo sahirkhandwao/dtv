@@ -27,6 +27,9 @@ export default async function decorate(block) {
     const dealerSocial = document.createElement('div');
     dealerSocial.classList.add('footer-dealer-social');
 
+    const bottomBar = document.createElement('div');
+    bottomBar.classList.add('footer-bottom-bar');
+
     // Categorize content
     const sections = Array.from(fragment.children);
     sections.forEach((section) => {
@@ -64,28 +67,23 @@ export default async function decorate(block) {
       } else if (section.querySelector('ul') && !text.includes('SITEMAP')) {
         linkGrid.append(section);
         section.classList.add('footer-column');
-      } else if (text.includes('COPYRIGHT') || (section.querySelector('img') && !section.querySelector('ul'))) {
-        // Logo and Copyright area
-        section.classList.add('footer-brand-notice');
+      } else if (text.includes('COPYRIGHT') || section.querySelector('img') || text.includes('SITEMAP')) {
+        // Logo, Copyright, and Sitemap area
+        bottomBar.append(section);
+        if (text.includes('COPYRIGHT') || section.querySelector('img')) {
+          section.classList.add('footer-brand-notice');
+        } else {
+          section.classList.add('footer-legal-links');
+        }
       } else {
-        // Secondary Links
+        // Fallback or secondary links
+        bottomBar.append(section);
         section.classList.add('footer-legal-links');
       }
     });
 
     topSection.append(linkGrid, dealerSocial);
     footer.append(topSection);
-
-    // Collect bottom bar elements
-    const bottomBar = document.createElement('div');
-    bottomBar.classList.add('footer-bottom-bar');
-    
-    const brandNotice = footer.querySelector('.footer-brand-notice');
-    const legalLinks = footer.querySelector('.footer-legal-links');
-    
-    if (brandNotice) bottomBar.append(brandNotice);
-    if (legalLinks) bottomBar.append(legalLinks);
-    
     footer.append(bottomBar);
   }
 
