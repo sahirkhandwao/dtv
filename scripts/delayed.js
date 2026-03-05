@@ -1,4 +1,5 @@
 import { loadScript, getMetadata } from './aem.js';
+import { trackDishtvAnalytics } from './adobeAnalytics.js';
 
 // eslint-disable-next-line import/prefer-default-export
 export async function loadThirdParty() {
@@ -8,15 +9,12 @@ export async function loadThirdParty() {
   const fbPixelId = getMetadata('fb-pixel-id') || '1351209631677206';
   const cleverTapId = getMetadata('clevertap-id') || '848-8Z5-786Z';
 
-  // Adobe Launch Data Layer initialization
-  window.adobeDataLayer = window.adobeDataLayer || [];
-  window.adobeDataLayer.push({
-    event: 'pageLoaded',
+  trackDishtvAnalytics('pageLoaded', {
     xdmPageLoad: {
       web: {
         webPageDetails: {
-          pageName: document.title,
-          brand: 'dishtv',
+          pageName: getMetadata('meta-analytics-title'),
+          channel: getMetadata('meta-analytics-channel'),
         },
       },
     },
