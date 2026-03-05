@@ -1,6 +1,6 @@
-/* Instant Recharge Widget Styles */
+/* Recharge Widget Styles */
 
-.instant-recharge-widget-wrapper {
+.recharge-wrapper {
   position: absolute;
   top: 0;
   right: 0;
@@ -8,12 +8,12 @@
   width: auto;
 }
 
-.icon-lightning img{
-      height: 30px;
-    width: 18px;
+.icon-lightning img {
+  height: 30px;
+  width: 18px;
 }
 
-.instant-recharge-widget {
+.recharge {
   background-color: #000;
   color: #fff;
   width: 390px;
@@ -23,14 +23,14 @@
   box-sizing: border-box;
 }
 
-.instant-recharge-widget .recharge-header {
+.recharge .recharge-header {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
 }
 
-.instant-recharge-widget .recharge-header h2 {
+.recharge .recharge-header h2 {
   margin: 0;
   font-size: 18px;
   font-weight: 500;
@@ -39,19 +39,19 @@
   text-transform: none;
 }
 
-.instant-recharge-widget .recharge-header .icon svg {
+.recharge .recharge-header .icon svg {
   width: 14px;
   height: auto;
 }
 
 /* Form Styles */
-.instant-recharge-widget .recharge-form {
+.recharge .recharge-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.instant-recharge-widget .recharge-input-wrapper input {
+.recharge .recharge-input-wrapper input {
   width: 100%;
   height: 48px;
   background-color: transparent;
@@ -63,11 +63,11 @@
   outline: none;
 }
 
-.instant-recharge-widget .recharge-input-wrapper input::placeholder {
+.recharge .recharge-input-wrapper input::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.instant-recharge-widget .recharge-proceed-btn {
+.recharge .recharge-proceed-btn {
   width: 100%;
   height: 48px;
   background-color: #fff;
@@ -81,7 +81,7 @@
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
-.instant-recharge-widget .recharge-proceed-btn:hover {
+.recharge .recharge-proceed-btn:hover {
   background-color: #f0f0f0;
 }
 
@@ -93,14 +93,14 @@
 
 /* Mobile Responsive */
 @media (max-width: 900px) {
-  .instant-recharge-widget-wrapper {
+  .recharge-wrapper {
     position: relative;
     width: 100%;
     top: auto;
     right: auto;
   }
 
-  .instant-recharge-widget {
+  .recharge {
     width: 100%;
     border-radius: 0;
     padding: 24px 20px;
@@ -113,8 +113,8 @@
 }
 
 @media (min-width: 1600px) {
-    /* Handle large screens to keep widget aligned with container content if necessary */
-    .instant-recharge-widget-wrapper {
+    /* Handle large screens to keep widget aligned with container content */
+    .recharge-wrapper {
         right: 0;
     }
 }
