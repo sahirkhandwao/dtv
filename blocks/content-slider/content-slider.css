@@ -100,6 +100,7 @@
   position: relative;
   min-width: 0;
   /* Critical for flex items with swiper */
+  
 }
 
 .content-slider-right {
