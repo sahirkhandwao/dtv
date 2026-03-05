@@ -149,7 +149,15 @@
 
 @media (max-width: 899px) {
   .banner .swiper {
-    height: 400px;
+    /* height: 400px; */
+  }
+
+  .banner .slide-background {
+    position: static;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
   }
 
   .banner .slide-overlay h1 {

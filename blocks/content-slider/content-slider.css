@@ -27,7 +27,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 30px;
   padding-bottom: 10px;
 }
@@ -87,20 +87,24 @@
 .content-slider-synced-container {
   display: flex;
   gap: 20px;
-  height: 500px; /* Fixed height for desktop to prevent infinite growth */
+  height: 500px;
+  /* Fixed height for desktop to prevent infinite growth */
   align-items: stretch;
 }
 
 .content-slider-left {
-  flex: 1.8; /* Larger preview */
+  flex: 1;
+  /* Larger preview */
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  min-width: 0; /* Critical for flex items with swiper */
+  min-width: 0;
+  /* Critical for flex items with swiper */
 }
 
 .content-slider-right {
-  flex: 1; /* Grid area */
+  flex: 1;
+  /* Grid area */
   position: relative;
   overflow: hidden;
   min-width: 0;
@@ -117,10 +121,12 @@
 .card-visual img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure images fill but don't stretch aspect ratio */
+  object-fit: cover;
+  /* Ensure images fill but don't stretch aspect ratio */
   display: block;
   border-radius: 6px;
-  max-width: 100%; /* Safety against global width overrides */
+  max-width: 100%;
+  /* Safety against global width overrides */
 }
 
 .preview-info {
@@ -129,7 +135,7 @@
   left: 0;
   width: 100%;
   padding: 20px;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
   display: flex;
   align-items: center;
   gap: 15px;
@@ -158,7 +164,8 @@
 .initializeGridRight .swiper-slide {
   position: relative;
   cursor: pointer;
-  height: calc((100% - 14px) / 2) !important; /* For 2 rows grid */
+  height: calc((100% - 14px) / 2) !important;
+  /* For 2 rows grid */
   display: flex;
   flex-direction: column;
 }
@@ -194,7 +201,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.8);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -204,6 +210,9 @@
   transition: opacity 0.3s;
   z-index: 5;
   border-radius: 6px;
+  backdrop-filter: blur(5px);
+  background: linear-gradient(158deg, rgba(255, 199, 0, .55), rgba(255, 0, 0, .55) 82.7%, rgba(255, 0, 138, .55));
+  border-radius: 5px;
 }
 
 .initializeGridRight .swiper-slide:hover .card-overlay {
@@ -230,13 +239,13 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .preview-btn span:first-child::before {
   content: '';
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
   border-left: 12px solid #333;
@@ -258,7 +267,7 @@
   transform: translateX(-50%);
   width: 100px !important;
   height: 4px !important;
-  background: rgba(255,255,255,0.1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 2px !important;
 }
 
@@ -277,16 +286,19 @@
   }
 
   .content-slider-left {
-    display: none; /* Hide large preview on mobile */
+    display: none;
+    /* Hide large preview on mobile */
   }
 
   .content-slider-right {
     width: 100% !important;
-    height: auto; /* Reset grid height */
+    height: auto;
+    /* Reset grid height */
   }
 
   .initializeGridRight .swiper-wrapper {
-    flex-wrap: nowrap; /* Disable grid wrap */
+    flex-wrap: nowrap;
+    /* Disable grid wrap */
   }
 
   .initializeGridRight .swiper-slide {
