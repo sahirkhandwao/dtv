@@ -7,7 +7,7 @@ import { decorateIcons } from '../../scripts/aem.js';
 export default async function decorate(block) {
   const [headingCol, placeholderCol, buttonTextCol] = [...block.children];
 
-  const headingText = headingCol?.textContent.trim() || 'Instant Recharge';
+  const headingText = 'Instant Recharge';
   const placeholderText = placeholderCol?.textContent.trim() || 'Enter Registered Mobile No. OR VC No.';
   const buttonText = buttonTextCol?.textContent.trim() || 'PROCEED';
 
