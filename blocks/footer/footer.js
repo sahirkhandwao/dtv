@@ -3,6 +3,7 @@ import { loadFragment } from '../fragment/fragment.js';
 
 /**
  * loads and decorates the footer
+ * sync trigger: 2026-03-05 v2
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
