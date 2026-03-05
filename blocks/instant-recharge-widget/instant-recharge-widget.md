@@ -22,3 +22,4 @@ To author the block, create a table with 3 columns (or rows if using a vertical 
 | Instant Recharge Widget | | |
 |---|---|---|
 | Instant Recharge | Enter Registered Mobile No. OR VC No. | PROCEED |
+
