@@ -1,0 +1,303 @@
+.content-slider-wrapper {
+  background-color: #0b0b0b;
+  color: #fff;
+  padding: 60px 40px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.content-slider-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.content-slider-heading h2 {
+  font-size: 32px;
+  margin: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.content-slider-heading strong {
+  color: #f24b26;
+  font-weight: 700;
+}
+
+/* Tabs Nav */
+.content-slider-tab-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+}
+
+.content-slider-tab-nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 30px;
+}
+
+.content-slider-tab-nav li {
+  font-size: 14px;
+  font-weight: 600;
+  color: #888;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.content-slider-tab-nav li.active {
+  color: #fff;
+}
+
+.content-slider-tab-nav li.active::after {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #f24b26;
+}
+
+.content-slider-channel-guide {
+  color: #f24b26;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Panel management */
+.content-slider-panel {
+  display: none;
+}
+
+.content-slider-panel.active {
+  display: block;
+}
+
+.content-slider-synced-container {
+  display: flex;
+  gap: 20px;
+  height: 500px; /* Fixed height for desktop to prevent infinite growth */
+  align-items: stretch;
+}
+
+.content-slider-left {
+  flex: 1.8; /* Larger preview */
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  min-width: 0; /* Critical for flex items with swiper */
+}
+
+.content-slider-right {
+  flex: 1; /* Grid area */
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Slide styles - Fix for infinite enlargement */
+.preview-visual,
+.card-visual {
+  width: 100%;
+  height: 100%;
+}
+
+.preview-visual img,
+.card-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure images fill but don't stretch aspect ratio */
+  display: block;
+  border-radius: 6px;
+  max-width: 100%; /* Safety against global width overrides */
+}
+
+.preview-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.preview-info .channel-logo img {
+  width: 60px;
+  height: auto;
+}
+
+.preview-info .title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.preview-info .meta {
+  font-size: 14px;
+  color: #ccc;
+  border-left: 2px solid #ccc;
+  padding-left: 10px;
+  margin-left: 10px;
+  display: inline-block;
+}
+
+/* Card styles */
+.initializeGridRight .swiper-slide {
+  position: relative;
+  cursor: pointer;
+  height: calc((100% - 14px) / 2) !important; /* For 2 rows grid */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.card-info .channel-logo-small img {
+  width: 40px;
+}
+
+.card-info .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card-info .meta {
+  font-size: 10px;
+  color: #aaa;
+}
+
+/* Overlay on Hover */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 5;
+  border-radius: 6px;
+}
+
+.initializeGridRight .swiper-slide:hover .card-overlay {
+  opacity: 1;
+}
+
+.overlay-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  gap: 8px;
+}
+
+.overlay-btn span:first-child {
+  width: 45px;
+  height: 45px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.preview-btn span:first-child::before {
+  content: '';
+  width: 0; 
+  height: 0; 
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid #333;
+  margin-left: 4px;
+}
+
+.add-btn span:first-child::before {
+  content: '+';
+  color: #333;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+/* Swiper custom scrollbar */
+.grid-carousel-scrollbar {
+  position: absolute;
+  bottom: -30px !important;
+  left: 50% !important;
+  transform: translateX(-50%);
+  width: 100px !important;
+  height: 4px !important;
+  background: rgba(255,255,255,0.1) !important;
+  border-radius: 2px !important;
+}
+
+.grid-carousel-scrollbar .swiper-scrollbar-drag {
+  background: #f24b26 !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 648px) {
+  .content-slider-wrapper {
+    padding: 40px 15px;
+  }
+
+  .content-slider-heading h2 {
+    font-size: 24px;
+  }
+
+  .content-slider-left {
+    display: none; /* Hide large preview on mobile */
+  }
+
+  .content-slider-right {
+    width: 100% !important;
+    height: auto; /* Reset grid height */
+  }
+
+  .initializeGridRight .swiper-wrapper {
+    flex-wrap: nowrap; /* Disable grid wrap */
+  }
+
+  .initializeGridRight .swiper-slide {
+    height: auto !important;
+  }
+
+  .content-slider-tab-nav ul {
+    gap: 15px;
+  }
+
+  .content-slider-channel-guide {
+    display: none;
+  }
+}
