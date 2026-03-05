@@ -21,7 +21,7 @@ export default async function decorate(block) {
   header.className = 'recharge-header';
   header.innerHTML = `
     <span class="icon icon-lightning">
-      <img src='/icons/thunder-icon.png' aria-hidden="true" width="18" height="30">
+      <img src='/icons/thunder.png' aria-hidden="true" width="18" height="30">
     </span>
     <h2>${headingText}</h2>
   `;
