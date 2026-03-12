@@ -12,6 +12,13 @@ import {
   loadCSS,
 } from './aem.js';
 
+// Initialize DishTV global object and synchronization promise
+window.dishTv = window.dishTv || {};
+let resolveToken;
+window.dishTvTokenPromise = new Promise((resolve) => {
+  resolveToken = resolve;
+});
+
 /**
  * Sets a cookie.
  * @param {string} name Cookie name
@@ -50,7 +57,7 @@ function getCookie(name) {
  */
 async function fetchIpAddress() {
   try {
-    const response = await fetch('https://www.dishtv.in/services/dishtv/ipAddress');
+    const response = await fetch('https://stage-aem.dishtv.in/services/dishtv/ipAddress');
     if (response.ok) {
       const data = await response.text();
       // The service returns a string like "IP1, IP2, ..." or "IP1"
@@ -85,12 +92,66 @@ async function fetchAnonymousToken(ip) {
         setCookie('token', token, 1);
         // eslint-disable-next-line no-console
         console.log('DishTV Anonymous Token fetched and stored.');
+
+        // Resolve the global promise if it hasn't been resolved yet
+        if (resolveToken) {
+          resolveToken(token);
+          resolveToken = null; // Ensure it's only resolved once
+        }
       }
     }
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('Failed to fetch anonymous token', e);
   }
+}
+
+/**
+ * Fetches the products data for new connections.
+ * @returns {Promise<Object|null>} The products data or null.
+ */
+export async function fetchProductsData() {
+  const cachedData = sessionStorage.getItem('productsData');
+  if (cachedData) {
+    try {
+      const parsed = JSON.parse(cachedData);
+      // Check if data is fresh (e.g., less than 30 minutes old)
+      if (parsed.timestamp && (Date.now() - parsed.timestamp < 1800000)) {
+        return parsed.data;
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  const token = await window.dishTvTokenPromise;
+  if (!token) return null;
+
+  try {
+    const response = await fetch('https://bizlogic-api.dishtv.in/api/PrePaidHomeDelivery/ProductsNewConnection', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+      body: JSON.stringify({ SMSID: '0' }),
+    });
+
+    if (response.ok) {
+      const json = await response.json();
+      if (json && json.productsData) {
+        sessionStorage.setItem('productsData', JSON.stringify({
+          data: json,
+          timestamp: Date.now(),
+        }));
+        return json;
+      }
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to fetch products data', e);
+  }
+  return null;
 }
 
 /**
@@ -262,30 +323,36 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  // Start the token fetch process immediately in the background
+  const initToken = async () => {
+    try {
+      const ip = await fetchIpAddress();
+      if (ip) {
+        window.dishTv.ipAddress = ip;
+        // eslint-disable-next-line no-console
+        console.log('DishTV IP Address:', ip);
+        await fetchAnonymousToken(ip);
+
+        // Setup refresh interval (110 seconds)
+        setInterval(() => {
+          if (!getCookie('userloggedin')) {
+            fetchAnonymousToken(ip);
+          }
+        }, 110000);
+      } else {
+        // Fallback to cookie if IP fetch fails
+        const token = getCookie('token');
+        if (resolveToken) resolveToken(token);
+      }
+    } catch (e) {
+      if (resolveToken) resolveToken(getCookie('token'));
+    }
+  };
+  initToken();
+
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
-
-  // Initialize DishTV global object
-  window.dishTv = window.dishTv || {};
-
-  // Fetch IP address and then the anonymous token
-  fetchIpAddress().then((ip) => {
-    if (ip) {
-      window.dishTv.ipAddress = ip;
-      // eslint-disable-next-line no-console
-      console.log('DishTV IP Address:', ip);
-
-      fetchAnonymousToken(ip);
-
-      // Setup refresh interval (110 seconds as per dishtv.in)
-      setInterval(() => {
-        if (!getCookie('userloggedin')) {
-          fetchAnonymousToken(ip);
-        }
-      }, 110000);
-    }
-  });
 }
 
 loadPage();
