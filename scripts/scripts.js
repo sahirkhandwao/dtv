@@ -13,6 +13,38 @@ import {
 } from './aem.js';
 
 /**
+ * Sets a cookie.
+ * @param {string} name Cookie name
+ * @param {string} value Cookie value
+ * @param {number} days Days to expire
+ */
+function setCookie(name, value, days) {
+  let expires = '';
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = `; expires=${date.toUTCString()}`;
+  }
+  document.cookie = `${name}=${value || ''}${expires}; path=/; SameSite=Lax`;
+}
+
+/**
+ * Gets a cookie.
+ * @param {string} name Cookie name
+ * @returns {string|null} Cookie value or null
+ */
+function getCookie(name) {
+  const nameEQ = `${name}=`;
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i += 1) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+/**
  * Fetches the user's IP address from the DishTV service.
  * @returns {Promise<string|null>} The first IP address in the list or null.
  */
@@ -31,6 +63,34 @@ async function fetchIpAddress() {
     console.error('Failed to fetch IP address', e);
   }
   return null;
+}
+
+/**
+ * Fetches the anonymous token from DishTV services.
+ * @param {string} ip The IP address to use for the token request.
+ */
+async function fetchAnonymousToken(ip) {
+  if (!ip) return;
+  try {
+    const response = await fetch(`https://www.dishtv.in/services/anonymousToken?ipAddress=${ip}&forDishTv=true`, {
+      method: 'POST',
+    });
+    if (response.ok) {
+      const json = await response.json();
+      if (json && json.data && json.data.token) {
+        const { token } = json.data;
+        window.dishTv = window.dishTv || {};
+        window.dishTv.token = token;
+        setCookie('RequestAnonymousToken', token, 1);
+        setCookie('token', token, 1);
+        // eslint-disable-next-line no-console
+        console.log('DishTV Anonymous Token fetched and stored.');
+      }
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to fetch anonymous token', e);
+  }
 }
 
 /**
@@ -206,13 +266,24 @@ async function loadPage() {
   await loadLazy(document);
   loadDelayed();
 
-  // Fetch IP address and store it globally for other blocks/scripts
+  // Initialize DishTV global object
+  window.dishTv = window.dishTv || {};
+
+  // Fetch IP address and then the anonymous token
   fetchIpAddress().then((ip) => {
     if (ip) {
-      window.dishTv = window.dishTv || {};
       window.dishTv.ipAddress = ip;
       // eslint-disable-next-line no-console
       console.log('DishTV IP Address:', ip);
+
+      fetchAnonymousToken(ip);
+
+      // Setup refresh interval (110 seconds as per dishtv.in)
+      setInterval(() => {
+        if (!getCookie('userloggedin')) {
+          fetchAnonymousToken(ip);
+        }
+      }, 110000);
     }
   });
 }
