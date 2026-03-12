@@ -13,6 +13,27 @@ import {
 } from './aem.js';
 
 /**
+ * Fetches the user's IP address from the DishTV service.
+ * @returns {Promise<string|null>} The first IP address in the list or null.
+ */
+async function fetchIpAddress() {
+  try {
+    const response = await fetch('https://www.dishtv.in/services/dishtv/ipAddress');
+    if (response.ok) {
+      const data = await response.text();
+      // The service returns a string like "IP1, IP2, ..." or "IP1"
+      const cleanedData = data.replace(/"/g, '');
+      const ips = cleanedData.split(',');
+      return ips[0].trim();
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to fetch IP address', e);
+  }
+  return null;
+}
+
+/**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
  */
@@ -184,6 +205,16 @@ async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
+
+  // Fetch IP address and store it globally for other blocks/scripts
+  fetchIpAddress().then((ip) => {
+    if (ip) {
+      window.dishTv = window.dishTv || {};
+      window.dishTv.ipAddress = ip;
+      // eslint-disable-next-line no-console
+      console.log('DishTV IP Address:', ip);
+    }
+  });
 }
 
 loadPage();
