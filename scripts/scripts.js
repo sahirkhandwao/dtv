@@ -139,7 +139,7 @@ export async function fetchProductsData() {
 
     if (response.ok) {
       const json = await response.json();
-      if (json && json.productsData) {
+      if (json && json.data) {
         sessionStorage.setItem('productsData', JSON.stringify({
           data: json,
           timestamp: Date.now(),

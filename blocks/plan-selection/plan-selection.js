@@ -27,22 +27,22 @@ function createCard(product) {
   // Header (Price + Image)
   const cardHeader = document.createElement('div');
   cardHeader.className = 'plan-card-header';
-  
+
   const headerLeft = document.createElement('div');
   headerLeft.className = 'plan-card-price-area';
   headerLeft.innerHTML = `
     <div class="card-plan-name">${product.product_name}</div>
     <div class="card-price">₹${product.price}</div>
-    <div class="card-sub-price">With Antenna ₹${product.price_with_odu}</div>
+    <div class="card-sub-price">${product.shortdescription}</div>
   `;
 
   const headerRight = document.createElement('div');
   headerRight.className = 'plan-card-visual-area';
-  if (product.image_path) {
-     const img = document.createElement('img');
-     img.src = product.image_path;
-     img.alt = product.product_name;
-     headerRight.append(img);
+  if (product.image_path_1) {
+    const img = document.createElement('img');
+    img.src = 'https://dishtv.in/' + product.image_path_1;
+    img.alt = product.product_name;
+    headerRight.append(img);
   }
 
   cardHeader.append(headerLeft, headerRight);
@@ -54,13 +54,35 @@ function createCard(product) {
   featuresDiv.innerHTML = `<h3>KEY FEATURES</h3>`;
   const featureList = document.createElement('ul');
   featureList.classList.add('features-list');
-  if (product.lstProductsKeyFeatures) {
-    product.lstProductsKeyFeatures.forEach((feat) => {
-      const li = document.createElement('li');
-      li.textContent = feat.feature_name || feat; // Handling both object and string
-      featureList.append(li);
-    });
+
+  //   "keyFeature1": "Rs.1,000 Instant cashback",
+  // "keyFeature2": " 10% cashback on every recharge upto Rs.2,600",
+  // "keyFeature3": "Lifetime validity of the cashback",
+  for (let i = 1; i <= 3; i++) {
+    const li = document.createElement('li');
+    // add image as well
+    const imgIcon = document.createElement("img");
+    imgIcon.src = "https://dishtv.in/" + product[`keyFeature${i}Icon`];
+    imgIcon.classList.add("plan_feature_image");
+    li.append(imgIcon);
+    const featureText = document.createElement("span");
+    // featureText.className = "plan_feature_image";
+    featureText.textContent = product[`keyFeature${i}`];
+    li.append(featureText); 
+    featureList.append(li);
   }
+
+  // if (product.lstProductsKeyFeatures) {
+  //   product.lstProductsKeyFeatures.forEach((feat) => {
+  //     const li = document.createElement('li');
+  //     // add image as well
+  //     const imgIcon = document.createElement("img");
+  //     imgIcon.src = "https://dishtv.in/" + feat.image_path_1;
+  //     li.appendChild(imgIcon);
+  //     li.textContent = feat.description || feat; // Handling both object and string
+  //     featureList.append(li);
+  //   });
+  // }
   featuresDiv.append(featureList);
   card.append(featuresDiv);
 
@@ -69,13 +91,15 @@ function createCard(product) {
   valueDiv.className = 'plan-card-value-adds';
   const valueGrid = document.createElement('ul');
   valueGrid.className = 'value-grid';
-  
-  if (product.lstInstallationPlans) {
-    product.lstInstallationPlans.slice(0, 4).forEach((item) => {
+
+  if (product.lstProductsKeyFeatures) {
+    product.lstProductsKeyFeatures.slice(0, 4).forEach((item) => {
       const li = document.createElement('li');
       li.innerHTML = `
-        <div class="value-icon"></div>
-        <div class="value-text">${item.installation_name || item}</div>
+        <div class="value-icon">
+          <img src="https://dishtv.in/${item.image_path}" alt="${item.image_path}">
+        </div>
+        <div class="value-text">${item.description || item}</div>
       `;
       valueGrid.append(li);
     });
@@ -86,8 +110,8 @@ function createCard(product) {
   // Footer Toggle + Action
   const cardFooter = document.createElement('div');
   cardFooter.className = 'plan-card-footer';
-  
-  const radioName = `antenna-${product.product_name.replace(/\s+/g, '-').toLowerCase()}`;
+
+  const radioName = `antenna-${product.shortdescription.replace(/\s+/g, '-').toLowerCase()}`;
   const antennaToggle = document.createElement('div');
   antennaToggle.className = 'antenna-toggle';
   antennaToggle.innerHTML = `
@@ -104,8 +128,9 @@ function createCard(product) {
   btn.href = '#'; // Default or from API if available
   btn.className = 'button primary select-button';
   btn.textContent = 'SELECT';
+  btn.onclick = () => {window.location.href = "https://www.dishtv.in/fill-details-nc.html?langValue=17"; };
   actionDiv.append(btn);
-  
+
   const infoIcon = document.createElement('span');
   infoIcon.className = 'icon-info-circle';
   actionDiv.append(infoIcon);
@@ -154,8 +179,8 @@ export default async function decorate(block) {
 
   // 2. Fetch and render dynamic content
   const data = await fetchProductsData();
-  if (data && data.productsData) {
-    data.productsData.forEach((product) => {
+  if (data && data.data) {
+    data.data.forEach((product) => {
       swiperWrapper.append(createCard(product));
     });
   }
