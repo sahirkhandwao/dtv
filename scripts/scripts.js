@@ -77,13 +77,19 @@ async function fetchIpAddress() {
  * @param {string} ip The IP address to use for the token request.
  */
 async function fetchAnonymousToken(ip) {
-  if (!ip) return;
+  if (!ip) {
+    if (resolveToken) {
+      resolveToken(getCookie('token'));
+      resolveToken = null;
+    }
+    return;
+  }
   try {
     const response = await fetch(`https://stage-aem.dishtv.in/services/anonymousToken?ipAddress=${ip}&forDishTv=true`, {
       method: 'POST',
       headers: {
-        accept: '*/*'
-      }
+        accept: '*/*',
+      },
     });
     if (response.ok) {
       const json = await response.json();
@@ -101,11 +107,21 @@ async function fetchAnonymousToken(ip) {
           resolveToken(token);
           resolveToken = null; // Ensure it's only resolved once
         }
+      } else if (resolveToken) {
+        resolveToken(getCookie('token'));
+        resolveToken = null;
       }
+    } else if (resolveToken) {
+      resolveToken(getCookie('token'));
+      resolveToken = null;
     }
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('Failed to fetch anonymous token', e);
+    if (resolveToken) {
+      resolveToken(getCookie('token'));
+      resolveToken = null;
+    }
   }
 }
 
