@@ -128,7 +128,7 @@ export async function fetchProductsData() {
   if (!token) return null;
 
   try {
-    const response = await fetch('https://bizlogic-api.dishtv.in/api/PrePaidHomeDelivery/ProductsNewConnection', {
+    const response = await fetch('https://beta2-bizlogic-api.dishtv.in/api/PrePaidHomeDelivery/ProductsNewConnection', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
