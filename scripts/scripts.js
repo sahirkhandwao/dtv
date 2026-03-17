@@ -79,7 +79,7 @@ async function fetchIpAddress() {
 async function fetchAnonymousToken(ip) {
   if (!ip) return;
   try {
-    const response = await fetch(`https://www.dishtv.in/services/anonymousToken?ipAddress=${ip}&forDishTv=true`, {
+    const response = await fetch(`https://stage-aem.dishtv.in/services/anonymousToken?ipAddress=${ip}&forDishTv=true`, {
       method: 'POST',
     });
     if (response.ok) {
