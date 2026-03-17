@@ -1,6 +1,6 @@
 import { decorateIcons, loadScript, loadCSS } from '../../scripts/aem.js';
 
-const VALIDATION_API = 'https://bizlogic-api.dishtv.in/API/Subscriber/SubscriberInfo';
+const VALIDATION_API = 'https://beta2-bizlogic-api.dishtv.in/API/Subscriber/SubscriberInfo';
 const SWAL_JS = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
 const SWAL_CSS = 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css';
 

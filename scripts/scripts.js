@@ -81,6 +81,12 @@ async function fetchAnonymousToken(ip) {
   try {
     const response = await fetch(`https://stage-aem.dishtv.in/services/anonymousToken?ipAddress=${ip}&forDishTv=true`, {
       method: 'POST',
+      headers: {
+        accept: '*/*',
+        'cache-control': 'no-cache',
+        dnt: '1',
+        pragma: 'no-cache',
+      }
     });
     if (response.ok) {
       const json = await response.json();
