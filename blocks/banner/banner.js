@@ -1,4 +1,4 @@
-import { loadCSS, loadScript } from '../../scripts/aem.js';
+import { loadCSS, loadScript, createOptimizedPicture } from '../../scripts/aem.js';
 
 /**
  * Generic banner block that uses Swiper JS.
@@ -26,20 +26,29 @@ export default async function decorate(block) {
     const link = cols[2]?.querySelector('a');
 
     if (desktopImg) {
-      const picture = document.createElement('picture');
-      picture.className = 'slide-background';
+      const alt = desktopImg.alt || 'DishTV Slide';
+      const isEager = !slideRow.previousElementSibling;
+      let picture;
 
-      if (mobileImg) {
-        const sourceMobile = document.createElement('source');
-        sourceMobile.setAttribute('media', '(max-width: 600px)');
-        sourceMobile.setAttribute('srcset', mobileImg.src);
-        picture.append(sourceMobile);
+      if (mobileImg && mobileImg.src !== desktopImg.src) {
+        picture = document.createElement('picture');
+        picture.className = 'slide-background';
+        
+        const desktopPic = createOptimizedPicture(desktopImg.src, alt, isEager, [{ media: '(min-width: 600px)', width: '2000' }]);
+        const mobilePic = createOptimizedPicture(mobileImg.src, alt, isEager, [{ width: '750' }]);
+
+        mobilePic.querySelectorAll('source').forEach((s) => {
+          s.setAttribute('media', '(max-width: 600px)');
+          picture.append(s);
+        });
+        desktopPic.querySelectorAll('source').forEach((s) => {
+          picture.append(s);
+        });
+        picture.append(desktopPic.querySelector('img'));
+      } else {
+        picture = createOptimizedPicture(desktopImg.src, alt, isEager, [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }]);
+        picture.className = 'slide-background';
       }
-
-      const img = document.createElement('img');
-      img.src = desktopImg.src;
-      img.alt = desktopImg.alt || 'DishTV Slide';
-      picture.append(img);
 
       slide.append(picture);
 
