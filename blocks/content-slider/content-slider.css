@@ -100,7 +100,7 @@
   position: relative;
   min-width: 0;
   /* Critical for flex items with swiper */
-  
+
 }
 
 .content-slider-right {
@@ -312,5 +312,9 @@
 
   .content-slider-channel-guide {
     display: none;
+  }
+
+  .content-slider-synced-container {
+    height: 202px;
   }
 }
