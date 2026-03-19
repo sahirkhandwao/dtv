@@ -316,6 +316,7 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
+  initToken();
   loadHeader(doc.querySelector('header'));
 
   const main = doc.querySelector('main');
@@ -335,40 +336,47 @@ async function loadLazy(doc) {
  * Loads everything that happens a lot later,
  * without impacting the user experience.
  */
+/**
+ * Start the token fetch process in the background.
+ */
+async function initToken() {
+  try {
+    const ip = await fetchIpAddress();
+    if (ip) {
+      window.dishTv.ipAddress = ip;
+      // eslint-disable-next-line no-console
+      console.log('DishTV IP Address:', ip);
+      await fetchAnonymousToken(ip);
+
+      // Setup refresh interval (110 seconds)
+      setInterval(() => {
+        if (!getCookie('userloggedin')) {
+          fetchAnonymousToken(ip);
+        }
+      }, 110000); // 110s
+    } else {
+      // Fallback to cookie if IP fetch fails
+      const token = getCookie('token');
+      if (resolveToken) resolveToken(token);
+    }
+  } catch (e) {
+    if (resolveToken) resolveToken(getCookie('token'));
+  }
+}
+
+/**
+ * Loads everything that happens a lot later,
+ * without impacting the user experience.
+ */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => import('./delayed.js'), 3000);
-  // load anything that can be postponed to the latest here
+  window.setTimeout(() => {
+    import('./delayed.js');
+  }, 3000);
 }
 
 async function loadPage() {
-  // Start the token fetch process immediately in the background
-  const initToken = async () => {
-    try {
-      const ip = await fetchIpAddress();
-      if (ip) {
-        window.dishTv.ipAddress = ip;
-        // eslint-disable-next-line no-console
-        console.log('DishTV IP Address:', ip);
-        await fetchAnonymousToken(ip);
-
-        // Setup refresh interval (110 seconds)
-        setInterval(() => {
-          if (!getCookie('userloggedin')) {
-            fetchAnonymousToken(ip);
-          }
-        }, 110000);
-      } else {
-        // Fallback to cookie if IP fetch fails
-        const token = getCookie('token');
-        if (resolveToken) resolveToken(token);
-      }
-    } catch (e) {
-      if (resolveToken) resolveToken(getCookie('token'));
-    }
-  };
   await loadEager(document);
-  initToken();
   await loadLazy(document);
   loadDelayed();
 }
