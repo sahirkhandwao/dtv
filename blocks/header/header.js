@@ -9,12 +9,12 @@ export default async function decorate(block) {
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
-  
+
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
 
   const navSectionWrappers = ['topbar', 'brand', 'sections', 'tools'];
-  
+
   const fragmentSections = [...fragment.children];
   fragmentSections.forEach((section, i) => {
     if (i < navSectionWrappers.length) {
@@ -64,7 +64,7 @@ export default async function decorate(block) {
           if (firstChild && firstChild.nodeType === Node.TEXT_NODE) {
             const span = document.createElement('span');
             span.textContent = firstChild.textContent;
-            navItem.insertBefore(span, navItem.firstChild.nextSibling.nextSibling); 
+            navItem.insertBefore(span, navItem.firstChild.nextSibling.nextSibling);
             const caret = document.createElement('span');
             caret.className = 'nav-caret';
             span.append(caret);
@@ -87,7 +87,7 @@ export default async function decorate(block) {
 
     const mobileTools = document.createElement('div');
     mobileTools.className = 'nav-mobile-tools';
-    
+
     const toolItems = [
       { name: 'GET A CONNECTION', icon: '/icons/new-connection-logo.png', link: '/new' },
       { name: 'RECHARGE', icon: '/icons/recharge-logo-header.png', link: '/recharge' },
@@ -144,20 +144,21 @@ export default async function decorate(block) {
     </button>
     <span>MENU</span>
     `;
-  
+
   hamburger.addEventListener('click', () => {
     const expanded = nav.getAttribute('aria-expanded') === 'true';
     document.body.style.overflowY = expanded ? '' : 'hidden';
     nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+    hamburger.classList.toggle('open');
   });
 
   if (topbar) nav.append(topbar);
-  
+
   navWrapper.append(navBrand || document.createElement('div'));
   navWrapper.append(hamburger);
   navWrapper.append(navSections || document.createElement('div'));
   navWrapper.append(navTools || document.createElement('div'));
-  
+
   nav.append(navWrapper);
 
   block.append(nav);

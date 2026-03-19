@@ -296,7 +296,7 @@ header .header-wrapper {
     display: block !important;
     background: #fff;
     position: fixed;
-    top: 60px;
+    top: 55px;
     left: 0;
     height: calc(100vh - 60px);
     overflow-y: auto;
@@ -351,6 +351,12 @@ header .header-wrapper {
     font-size: 9px;
     align-items: center;
     gap: 4px;
+  }
+
+  .nav-hamburger.open {
+    position: relative;
+    z-index: 999;
+    top: -39px;
   }
 
   .nav-brand img {
