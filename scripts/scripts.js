@@ -367,9 +367,8 @@ async function loadPage() {
       if (resolveToken) resolveToken(getCookie('token'));
     }
   };
-  initToken();
-
   await loadEager(document);
+  initToken();
   await loadLazy(document);
   loadDelayed();
 }
