@@ -2,6 +2,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
+  min-height: 500px;
 }
 
 .banner .swiper {
@@ -10,8 +11,10 @@
 }
 
 @media (min-width: 900px) {
+  .banner,
   .banner .swiper {
-    height: 715px;
+    min-height: 715px;
+    height: 715px !important;
   }
 }
 
