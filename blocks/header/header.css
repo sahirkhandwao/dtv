@@ -126,6 +126,7 @@ header .header-wrapper {
 .nav-brand {
   flex-shrink: 0;
   margin-right: 40px;
+  order: 0;
 }
 
 .nav-brand img {
@@ -308,6 +309,7 @@ header .header-wrapper {
     margin-left: auto;
     margin-right: 15px;
     align-items: center;
+    order: 1;
   }
 
   .nav-mobile-tools ul {
@@ -315,7 +317,7 @@ header .header-wrapper {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 15px;
+    gap: 8px;
   }
 
   .nav-mobile-tools li a {
@@ -324,8 +326,8 @@ header .header-wrapper {
     align-items: center;
     text-decoration: none;
     color: #444;
-    font-size: 8px;
-    font-weight: 700;
+    font-size: 9px;
+    font-weight: 400;
     text-align: center;
   }
 
@@ -339,10 +341,23 @@ header .header-wrapper {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    max-width: 15px;
   }
 
   .nav-hamburger {
     order: 3;
+    display: flex;
+    flex-direction: column;
+    font-size: 9px;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav-brand img {
+    width: 76px;
+    height: auto;
+    display: block;
+    padding-bottom: 5px;
   }
 
   .nav-hamburger button {
@@ -409,11 +424,11 @@ header .header-wrapper {
     position: relative;
     flex: 1;
   }
-  
+
   .nav-sections .nav-drop p {
     flex: 1;
   }
-  
+
   .nav-sections .nav-drop>a,
   .nav-sections .nav-drop>span {
     display: flex;
